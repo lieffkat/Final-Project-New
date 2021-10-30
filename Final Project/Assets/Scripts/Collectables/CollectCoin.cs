@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class CollectCoin : MonoBehaviour
 {
-    public AudioSource coinFX;
-
-   void OnTriggerEnter(Collider other)
+    private AudioSource coinFX;
+    private void Awake()
     {
-        coinFX.Play();
+        coinFX = GetComponent<AudioSource>();
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        if (coinFX != null) coinFX.Play();
+        else
+            Debug.Log("No coin fx audio source found for object: " + gameObject.name);
         this.gameObject.SetActive(false);
 
     }
