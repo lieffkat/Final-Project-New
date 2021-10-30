@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript2 : MonoBehaviour
+public class GeneralLevel : MonoBehaviour
 {
     public GameObject[] section;
     public int zPos = 50;

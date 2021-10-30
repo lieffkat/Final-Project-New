@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CollectCoin : MonoBehaviour
 {
-    public AudoiSource coinFX;
+    public AudioSource coinFX;
 
    void OnTriggerEnter(Collider other)
     {
