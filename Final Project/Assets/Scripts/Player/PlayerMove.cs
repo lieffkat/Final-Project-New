@@ -7,6 +7,7 @@ public class PlayerMove : MonoBehaviour
     public float moveSpeed = 3;
     public float leftRightSpeed = 4;
     public bool shouldJump = false;
+    public bool shouldSlide = false;
     public float moveSpeedMultiplier = 1f;
     public bool shouldStumble = false;
     public Animator myAnimator;
@@ -16,6 +17,12 @@ public class PlayerMove : MonoBehaviour
         transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed * moveSpeedMultiplier, Space.World);
 
 
+        if (shouldSlide)
+        {
+            shouldSlide = false;
+            myAnimator.SetTrigger("Slide");
+            //cool sfx?
+        }
         if (shouldJump)
         {
             shouldJump = false;
