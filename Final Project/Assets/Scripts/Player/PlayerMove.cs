@@ -41,8 +41,14 @@ public class PlayerMove : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
             shouldJump = true;
 
+        HorizontalMovementController();
+
+    }
+
+    protected virtual void HorizontalMovementController()
+    {
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        { 
+        {
             if (this.gameObject.transform.position.x > LevelBoundary.leftSide)
             {
                 transform.Translate(Vector3.left * Time.deltaTime * leftRightSpeed);
@@ -57,7 +63,6 @@ public class PlayerMove : MonoBehaviour
 
             }
         }
-
     }
 
     IEnumerator StumbleSpeedModifier()

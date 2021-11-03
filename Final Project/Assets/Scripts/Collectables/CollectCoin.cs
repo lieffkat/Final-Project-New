@@ -13,7 +13,9 @@ public class CollectCoin : MonoBehaviour
     {
         if (coinFX != null) coinFX.Play();
         else
-            Debug.Log("No coin fx audio source found for object: " + gameObject.name);
+        {
+        //    Debug.Log("No coin fx audio source found for object: " + gameObject.name);
+        }
         this.gameObject.SetActive(false);
 
     }
