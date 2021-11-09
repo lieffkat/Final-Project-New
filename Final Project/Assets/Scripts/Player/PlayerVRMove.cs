@@ -24,6 +24,7 @@ public class PlayerVRMove : PlayerMove
     void MoveTowardDesiredPosition()
     {
         Vector3 desiredDirection = Vector3.zero;
+        /* option 1
         if (transform.position.x > desiredXPos)
         {
             desiredDirection = Vector3.right;
@@ -33,6 +34,22 @@ public class PlayerVRMove : PlayerMove
             desiredDirection = Vector3.left;
         }
         transform.Translate(desiredDirection * Time.deltaTime * leftRightSpeed * -1);
+
+        float clampedPosX = Mathf.Clamp(transform.position.x, -1.1f, 1.1f);
+        transform.position = new Vector3(clampedPosX, transform.position.y, transform.position.z);
+        */
+        /* end option 1 */
+
+        /* option 2 */
+        float currentXPos = transform.position.x;
+        float nextXPosition = Mathf.Lerp(currentXPos, desiredXPos, Time.deltaTime * leftRightSpeed);
+        desiredDirection = new Vector3(nextXPosition, 0, 0);
+        float positionDifference = nextXPosition - currentXPos;
+        transform.Translate(Vector3.right * positionDifference);
+
+        float clampedPosX = Mathf.Clamp(transform.position.x, -1.1f, 1.1f);
+        transform.position = new Vector3(clampedPosX, transform.position.y, transform.position.z);
+        /* end option 2 */
     }
 
     void RaycastTargetUpdate()
