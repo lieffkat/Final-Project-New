@@ -35,6 +35,10 @@ public class PlayerMove : MonoBehaviour
             myAnimator.SetTrigger("Stumble");
             StartCoroutine(StumbleSpeedModifier());
             //maybe take damage? or tick off a "hearts" container? or play game over? yada yada
+            if (GetComponent<PlayerHealth>())
+            {
+                GetComponent<PlayerHealth>().TakeDamage(1);
+            }
         }
 
 
