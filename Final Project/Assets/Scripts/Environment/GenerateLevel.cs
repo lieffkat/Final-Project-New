@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// This generates the infinite runner 'sections'
+/// The current design spawns a random section every 2 seconds in GenerateSection.
+/// </summary>
 public class GenerateLevel : MonoBehaviour
 {
     public GameObject[] section;

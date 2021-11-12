@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// This overrides PlayerMove to use VR camera raycasts to assist with LEFT / RIGHT movement.
+/// 
+/// </summary>
 public class PlayerVRMove : PlayerMove
 {
     public Camera vrCamera;
@@ -20,27 +23,14 @@ public class PlayerVRMove : PlayerMove
         MoveTowardDesiredPosition();
 
     }
-
+    /// <summary>
+    /// Based on the current X position, this method moves the player towards a desired X position (RIGHT or LEFT).
+    /// At some speed, scaled by time, and clamped between two extremes (-1.1 and 1.1).
+    /// </summary>
     void MoveTowardDesiredPosition()
     {
         Vector3 desiredDirection = Vector3.zero;
-        /* option 1
-        if (transform.position.x > desiredXPos)
-        {
-            desiredDirection = Vector3.right;
-        }
-        if (transform.position.x < desiredXPos)
-        {
-            desiredDirection = Vector3.left;
-        }
-        transform.Translate(desiredDirection * Time.deltaTime * leftRightSpeed * -1);
 
-        float clampedPosX = Mathf.Clamp(transform.position.x, -1.1f, 1.1f);
-        transform.position = new Vector3(clampedPosX, transform.position.y, transform.position.z);
-        */
-        /* end option 1 */
-
-        /* option 2 */
         float currentXPos = transform.position.x;
         float nextXPosition = Mathf.Lerp(currentXPos, desiredXPos, Time.deltaTime * leftRightSpeed);
         desiredDirection = new Vector3(nextXPosition, 0, 0);
@@ -49,33 +39,34 @@ public class PlayerVRMove : PlayerMove
 
         float clampedPosX = Mathf.Clamp(transform.position.x, -1.1f, 1.1f);
         transform.position = new Vector3(clampedPosX, transform.position.y, transform.position.z);
-        /* end option 2 */
+       
     }
 
+    /// <summary>
+    /// This method uses Raycasting to let the player select their desired lane of movement (ex: lane Left, Middle, Right).
+    /// A Raycast is a line from one point to another which reports any physics collision made along the path.
+    /// A physics layer (MoveTargetLayer) allows us to only Raycast towards the objects of interest (ex: lane switches).
+    /// We saved the most recent Raycasted object (ex: a lane switch) to a variable called GazedAtObject.
+    /// </summary>
     void RaycastTargetUpdate()
     {
-        /*
-        if (vrPointer != null)
-        {
-            vrPointer.transform.position = vrCamera.transform.position;
-            vrPointer.transform.rotation = Quaternion.Euler(vrCamera.transform.eulerAngles.x, vrCamera.transform.eulerAngles.y, 0);
-            vrPointer.transform.Translate(new Vector3(0, 0, 1), Space.Self);
-        }
-        else { Debug.LogWarning("Hey bud, you need a VR Pointer");
-        }*/
+
         RaycastHit hit;
         if (Physics.Raycast(vrCamera.transform.position, vrCamera.transform.forward, out hit, _maxDistance, moveTargetLayer))
         {
             Debug.Log("I think I hit something..." + hit.transform.name);
             vrPointer.UpdatePointer(true);
             // GameObject detected in front of the camera.
+            // GazedAtObject is used for animating lane switches and storing desired X position.
+            // If the stored/previous GazedAtObject is different from what was just hit, then...
             if (_gazedAtObject != hit.transform.gameObject)
             {
+                // ...if the previous GazedAtObject was not null or invalid, then tell it to stop it's hover animation.
                 if (_gazedAtObject != null)
                 {
                     _gazedAtObject.GetComponent<VRLaneObject>().UpdateLaneHover(false);
                 }
-
+                // ...if the current hit object is a movement target, then store it as the new GazedAtObject and tell it to play the hover animation.
                 if (hit.transform.gameObject.CompareTag("MovementTarget"))
                 {
                     _gazedAtObject = hit.transform.gameObject;
@@ -86,6 +77,8 @@ public class PlayerVRMove : PlayerMove
                 }
                 
             }
+
+            // If we have a VR pointer ball/dot, tell it to change color
             if (vrPointer != null)
             {
                 float distance = Vector3.Distance(vrCamera.transform.position, hit.point);
