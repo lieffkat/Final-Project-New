@@ -30,8 +30,10 @@ public class PlayerVRMove : PlayerMove
     void MoveTowardDesiredPosition()
     {
         Vector3 desiredDirection = Vector3.zero;
-
+        
         float currentXPos = transform.position.x;
+        // A Lerp interpolates between two points based on a percentage value (ex: 0-1) which is usually 'Time.deltaTime'.
+        // This allows us to move from point A to point B at the same rate of speed from where the player is to where the player is going (ex: from the center lane to the right lane)
         float nextXPosition = Mathf.Lerp(currentXPos, desiredXPos, Time.deltaTime * leftRightSpeed);
         desiredDirection = new Vector3(nextXPosition, 0, 0);
         float positionDifference = nextXPosition - currentXPos;

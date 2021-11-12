@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// The pointer for VR interaction changes color when told to (ex: hovering over an action).
+/// </summary>
 public class VRPointerBehavior : MonoBehaviour
 {
     Renderer myRenderer;

@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Starts the player off with 3 hearts.  Everytime damage is taken, it subtracts one heart. It can also report whether it's dead and how much health remains.
+/// </summary>
 public class PlayerHealth : MonoBehaviour
 {
     public int MaxHealth = 3;

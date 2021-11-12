@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+/// <summary>
+/// This presents the player with the current heart count as reported by the PlayerHealth script.  
+/// </summary>
 public class PlayerHealthMeter : MonoBehaviour
 {
     public Image heart1, heart2, heart3;
