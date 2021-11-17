@@ -7530,11 +7530,12 @@ MonoBehaviour:
   shouldStumble: 0
   myAnimator: {fileID: 422084452}
   vrCamera: {fileID: 1723728290}
-  vrPointer: {fileID: 0}
+  vrPointer: {fileID: 179031040}
   moveTargetLayer:
     serializedVersion: 2
     m_Bits: 32
-  defaultPointerDistance: 2.5
+  _gazedAtObject: {fileID: 0}
+  desiredXPos: 0
 --- !u!1 &1680355603
 GameObject:
   m_ObjectHideFlags: 0
