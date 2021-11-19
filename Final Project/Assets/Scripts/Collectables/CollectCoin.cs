@@ -11,6 +11,9 @@ public class CollectCoin : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
+        CoinManager cm = GameObject.FindObjectOfType<CoinManager>();
+        if (cm != null) { cm.CollectCoin(10); }
+
         if (coinFX != null) coinFX.Play();
         else
         {
